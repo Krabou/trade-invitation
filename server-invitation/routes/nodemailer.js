@@ -27,13 +27,28 @@ async function sendMail(infos) {
 }
 
 router.post("/", async (req, res, next) => {
-  console.log(req.body.email);
+  console.log( "on a quoi la",req.body.mail);
+  if (!req.body.mail) {
+   res.status(422).json("Merci de remplir tout les champs");
+  }else{
+    var expressionReguliere = /^(([^<>()[]\.,;:s@]+(.[^<>()[]\.,;:s@]+)*)|(.+))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+
+    var email =  req.body.mail;
+    var emails = email.split(",");
+    emails.forEach((email) => {
+      if (!expressionReguliere.test(email)) {
+       
+       res.status(422).json("L'email n'a pas le bon format"); 
+       console.log("pas le bon format");
+      }
+    });
+  }
   sendMail(req.body)
     .then(() => {
-      res.status(200).json("/");
+      res.status(200).json("message envoyé");
     })
     .catch((err) => {
-      res.status(500).json("/");
+      res.status(500).json("error");
     });
 });
 
