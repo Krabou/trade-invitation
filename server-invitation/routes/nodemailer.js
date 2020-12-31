@@ -15,9 +15,8 @@ async function sendMail(infos) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: process.env.MAIL_USER_ADDRESS, // sender address
-    to: process.env.MAIL_USER_ADDRESS, // list of receivers
-    cc: `${infos.email}`,
+    from: process.env.MAIL_USER_ADDRESS, // sender address 
+    to: `${infos.mail}`,// list of receivers
     subject: `invitation`, // Subject line
     text: "to configure", // plain text body
     html: `<div>to configure</div>`, // html body
